@@ -20,11 +20,12 @@
 <body>
 	<h1>Register</h1>
 	<s:url value="/spitter/register" var="registerUrl"/>
-	<sf:form method="POST" commandName="spitter" action="${registerUrl }">
+	<sf:form method="POST" commandName="spitter" action="${registerUrl }" enctype="multipart/form-data">
 		Last Name: <sf:input path="lastName"/><sf:errors path="lastName" cssClass="error"/> <br/>
 		First Name: <sf:input path="firstName"/><sf:errors path="firstName" cssClass="error"/> <br/>
 		Username: <sf:input path="username"/><sf:errors path="username" cssClass="error"/> <br/>
 		Password: <sf:password path="password"/><sf:errors path="password" cssClass="error"/> <br/>
+		Profile Picture <input type="file" name="profilePicture" accept="image/jpeg,image/png,image/gif" /><br/>
 		<input type="submit" value="Register">
 	</sf:form>
 </body>
