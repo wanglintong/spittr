@@ -8,16 +8,15 @@
 
 <meta charset="UTF-8">
 
-<title>Profile</title>
+<title>Insert title here</title>
 
 </head>
 
 <body>
-	<h1>Regist Success!</h1>
-	Welcome,${username }!<br/>
-	id : ${spitter.id }<br/>
-	姓氏 : ${spitter.lastName }<br/>
-	名字 : ${spitter.firstName }
+	<h1>ERROR TEMPLATE</h1>
+	
+	通用错误页面
+
 </body>
 
 </html>

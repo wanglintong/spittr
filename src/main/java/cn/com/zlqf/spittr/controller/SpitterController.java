@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.com.zlqf.spittr.entity.Spitter;
+import cn.com.zlqf.spittr.exception.SpitterNotFoundException;
 
 @Controller
 @RequestMapping("/spitter")
@@ -28,7 +30,7 @@ public class SpitterController {
 	}
 	
 	@RequestMapping(value="/register",method=RequestMethod.POST)
-	public String regist(@Valid Spitter spitter,Errors errors,MultipartFile profilePicture,HttpServletRequest request) throws Exception {
+	public String regist(@Valid Spitter spitter,Errors errors,MultipartFile profilePicture,HttpServletRequest request,RedirectAttributes model) throws Exception {
 		spitter.setId(UUID.randomUUID().toString());
 		if(errors.hasErrors()) {
 			return "registForm";
@@ -36,13 +38,26 @@ public class SpitterController {
 		String path = request.getSession().getServletContext().getRealPath("uploads");  
 		File file = new File(path,profilePicture.getOriginalFilename());
 		profilePicture.transferTo(file);
-		System.out.println(spitter);
-		return "redirect:/spitter/" + spitter.getUsername();
+		
+		model.addAttribute("username", spitter.getUsername());
+		model.addFlashAttribute("spitter", spitter);
+		return "redirect:/spitter/{username}";
 	}
 	
 	@RequestMapping(value="/{username}",method=RequestMethod.GET)
 	public String showProfile(@PathVariable String username,Model model) {
 		model.addAttribute("username", username);
 		return "profile";
+	}
+	
+	@RequestMapping("/testException")
+	public String testException() {
+		throw new SpitterNotFoundException();
+	}
+	
+	@RequestMapping("/testException2")
+	public String testException2() {
+		int x = 1/0;
+		return "";
 	}
 }
