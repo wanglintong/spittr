@@ -9,6 +9,14 @@
 		<put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />
 	</definition>
 	
+	<definition name="unauthorized" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/unauthorized.jsp" />
+	</definition>
+	
+	<definition name="login" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp" />
+	</definition>
+	
 	<definition name="home" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/home.jsp" />
 	</definition>
