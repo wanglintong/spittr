@@ -9,6 +9,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
+import org.apache.velocity.app.event.ReferenceInsertionEventHandler.referenceInsertExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,8 +42,10 @@ public class LoginController {
 				return "login";
 			}
 		}
-		request.setAttribute("username", username);
-		return "home";
+		request.getSession().setAttribute("username", username);
+		String requestURI = WebUtils.getSavedRequest(request).getRequestURI();
+		requestURI = requestURI.replace("/spittr", "");
+		return "redirect:" + requestURI;
 	}
 	
 	@RequestMapping("/unauthorized")
