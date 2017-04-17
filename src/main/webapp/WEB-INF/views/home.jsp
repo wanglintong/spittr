@@ -11,6 +11,14 @@
 </head>
 <body>
 	<h1>Welcome to Spittr</h1>
+	<h3>
+		<shiro:authenticated>
+			欢迎 : ${username }
+		</shiro:authenticated>
+		<shiro:notAuthenticated>
+			尚未登录
+		</shiro:notAuthenticated>
+	</h3>
 	<a href="<c:url value="/spittles" />">Spittles</a> <br/><br/>
 	<a href="<c:url value="/spitter/register" />">Register</a> <br/><br/>
 	<a href="<c:url value="/spitter/userPage" />">userPage</a> <br/><br/>

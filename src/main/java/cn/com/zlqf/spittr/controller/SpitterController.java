@@ -63,7 +63,7 @@ public class SpitterController {
 		return "userPage";
 	}
 	
-	@RequiresRoles("admin")
+	@RequiresRoles({"admin"})
 	@RequestMapping("/adminPage")
 	public String adminPage() {
 		return "adminPage";

@@ -13,10 +13,8 @@
 </head>
 
 <body>
-	<h1>ERROR TEMPLATE</h1>
-	
-	通用错误页面
-
+	<h1>通用错误页面</h1>
+	${errorMsg }
 </body>
 
 </html>

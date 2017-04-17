@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+
 	<!-- shiroFilter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<!-- 安全管理器 -->
@@ -11,7 +11,7 @@
 		<property name="loginUrl" value="/login" />
 		<!-- 认证成功统一跳转到index.jsp，建议不配置，shiro认证成功自动到上一个请求路径 -->
 		<!-- <property name="successUrl" value="/home" /> -->
-		
+
 		<!-- 授权失败(用户访问的资源没有权限)跳转的url，在 refuse.jsp提示无权访问 -->
 		<property name="unauthorizedUrl" value="/unauthorized" />
 		<!-- 注入使用过虑器及配置过虑的规则 是一个过虑器链儿 从上到下执行 规则：将anon放在最前边，将authc认证过虑器放在最后边，配置成/** -->
@@ -19,13 +19,12 @@
 			<value>
 				<!-- 对静态资源设置匿名访问 ，无需认证即可访问，使用anon匿名过虑器 -->
 				/resources/** = anon
+				<!-- 首页放行 -->
+				/ = anon
 				<!--对login登陆提交放行 -->
-				/login = anon 
-				
-					<!--
-				/spitter/userPage = roles[user] 
-				/spitter/adminPage = roles[admin]
-				-->
+				/login = anon
+
+				<!-- /spitter/userPage = roles[user] /spitter/adminPage = roles[admin] -->
 				<!-- 退出拦截，请求logout执行退出操作 -->
 				/logout = logout
 				<!-- /** = authc 所有url都必须认证通过才可以访问 -->
@@ -33,59 +32,64 @@
 			</value>
 		</property>
 	</bean>
-	
+
 	<!-- 安全管理 -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<!-- 认证管理器 -->
 		<property name="authenticator" ref="authenticator" />
 		<!-- 会话管理器 -->
 		<property name="sessionManager" ref="sessionManager" />
-		
+
 		<property name="realms">
 			<list>
-				<ref bean="customRealm"/>
+				<ref bean="customRealm" />
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- 认证器 -->
 	<bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator">
 		<property name="authenticationStrategy">
-			<bean class="org.apache.shiro.authc.pam.AllSuccessfulStrategy"/>
+			<bean class="org.apache.shiro.authc.pam.AllSuccessfulStrategy" />
 		</property>
 	</bean>
-	
+
 	<!-- realm -->
 	<bean id="customRealm" class="cn.com.zlqf.spittr.realm.ShiroRealm">
-			
+
 		<property name="credentialsMatcher" ref="credentialsMatcherMD5" />
 	</bean>
 	<!-- realm -->
 	<bean id="customRealm2" class="cn.com.zlqf.spittr.realm.ShiroRealm2">
 		<property name="credentialsMatcher" ref="credentialsMatcherSHA1" />
 	</bean>
-	<!-- 凭证匹配器  MD5-->
-	<bean id="credentialsMatcherMD5" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+	<!-- 凭证匹配器 MD5 -->
+	<bean id="credentialsMatcherMD5"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
 		<!-- 指定散列算法 为md5 -->
 		<property name="hashAlgorithmName" value="MD5" />
 		<property name="hashIterations" value="1024" />
 	</bean>
-	<!-- 凭证匹配器  SHA1-->
-	<bean id="credentialsMatcherSHA1" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+	<!-- 凭证匹配器 SHA1 -->
+	<bean id="credentialsMatcherSHA1"
+		class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
 		<!-- 指定散列算法 为md5 -->
 		<property name="hashAlgorithmName" value="SHA1" />
 		<!-- 指定加密次数 -->
-		<property name="hashIterations" value="1024"/>
+		<property name="hashIterations" value="1024" />
 	</bean>
-	
+
 	<!-- sessionManager -->
-	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+	<bean id="sessionManager"
+		class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
 		<!-- session的失效时长，单位毫秒 -->
 		<property name="globalSessionTimeout" value="600000" />
 		<!-- 删除失效的session -->
 		<property name="deleteInvalidSessions" value="true" />
-		<!-- 更改默认的JSESSIONID标识为sid，避免shiro的session和普通session共存冲突问题， 比如：localhost:8081使用普通session，localhost:8080使用shiro的session，
+		<!-- 更改默认的JSESSIONID标识为sid，避免shiro的session和普通session共存冲突问题， 比如：localhost:8081使用普通session，localhost:8080使用shiro的session， 
 			这时两个都记录JSESSIONID名称的cookie会导致冲突。 -->
 		<property name="sessionIdCookie.name" value="sid" />
 	</bean>
+
+
 </beans>
