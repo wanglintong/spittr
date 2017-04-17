@@ -1,13 +1,23 @@
 package cn.com.zlqf.spittr.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Spittle {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="t_spittle")
+public class Spittle implements Serializable{
 	private String id;
 	private String message;
 	private Date time;
 	private Double latitude;
 	private Double longitude;
+	
+	public Spittle() {
+	}
 	
 	public Spittle(String message, Date time) {
 		this(message,time,null,null);
@@ -19,6 +29,7 @@ public class Spittle {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
+	@Id
 	public String getId() {
 		return id;
 	}

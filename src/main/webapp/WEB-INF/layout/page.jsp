@@ -18,7 +18,7 @@
 	<div id="content">
 		<tiles:insertAttribute name="body" />
 	</div>
-	<div id="footer">
+	<div id="footer" style="position:absolute;bottom:0;padding: 30px;left:42%">
 		<tiles:insertAttribute name="footer" />
 	</div>
 </body>

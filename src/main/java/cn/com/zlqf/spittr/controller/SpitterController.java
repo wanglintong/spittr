@@ -6,6 +6,9 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,10 +20,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.com.zlqf.spittr.entity.Spitter;
 import cn.com.zlqf.spittr.exception.SpitterNotFoundException;
+import cn.com.zlqf.spittr.service.SpitterService;
 
 @Controller
 @RequestMapping("/spitter")
 public class SpitterController {
+	
+	@Autowired
+	private SpitterService spitterService;
 	
 	@RequestMapping(value="/register",method=RequestMethod.GET)
 	public String showRegistForm(Model model) {
@@ -39,6 +46,8 @@ public class SpitterController {
 		File file = new File(path,profilePicture.getOriginalFilename());
 		profilePicture.transferTo(file);
 		
+		spitterService.addSpitter(spitter);
+		
 		model.addAttribute("username", spitter.getUsername());
 		model.addFlashAttribute("spitter", spitter);
 		return "redirect:/spitter/{username}";
@@ -49,6 +58,17 @@ public class SpitterController {
 		model.addAttribute("username", username);
 		return "profile";
 	}
+	@RequestMapping("/userPage")
+	public String userPage() {
+		return "userPage";
+	}
+	
+	@RequiresRoles("admin")
+	@RequestMapping("/adminPage")
+	public String adminPage() {
+		return "adminPage";
+	}
+	
 	
 	@RequestMapping("/testException")
 	public String testException() {

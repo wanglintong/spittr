@@ -11,6 +11,7 @@
 	<h1>登录页面</h1>
 	<s:url value="/login" var="loginUrl"/>
 	<form action="${loginUrl }" method="POST">
+		<p style="color: red">${loginMsg }</p>
 		Username : <input type="text" name="username" /> <br/>
 		Password : <input type="password"  name="password" /> <br/>
 		<input type="submit" value="Submit" />

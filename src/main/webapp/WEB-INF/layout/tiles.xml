@@ -33,6 +33,13 @@
 		<put-attribute name="body" value="/WEB-INF/views/spittles.jsp" />
 	</definition>
 	
+	<definition name="userPage" template="/WEB-INF/views/userPage.jsp" />
+	<definition name="adminPage" template="/WEB-INF/views/adminPage.jsp" />
+	
+	<definition name="spittles" extends="base">
+		<put-attribute name="body" value="/WEB-INF/views/spittles.jsp" />
+	</definition>
+	
 	<definition name="error/errorTemplate" extends="base">
 		<put-attribute name="body" value="/WEB-INF/views/error/errorTemplate.jsp" />
 	</definition>
