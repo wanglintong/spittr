@@ -1,6 +1,7 @@
 package cn.com.zlqf.spittr.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import cn.com.zlqf.spittr.dao.SpitterRepository;
@@ -19,6 +20,7 @@ public class SpitterServiceImpl implements SpitterService{
 	}
 
 	@Override
+	@Cacheable("spitterCache")
 	public Spitter findOne(String id) {
 		return spitterRepository.findOne(id);
 	}
