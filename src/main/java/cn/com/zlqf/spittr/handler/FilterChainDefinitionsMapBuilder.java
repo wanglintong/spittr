@@ -7,6 +7,7 @@ public class FilterChainDefinitionsMapBuilder {
 		LinkedHashMap<String,String> map = new LinkedHashMap<>();
 		//从数据库中查询...
 		map.put("/resources/**", "anon");
+		map.put("/spitter.service", "anon");
 		map.put("/", "anon");
 		map.put("/login", "anon");
 		map.put("/logout", "logout");

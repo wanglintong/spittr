@@ -2,8 +2,11 @@ package cn.com.zlqf.spittr.config;
 
 import java.util.Properties;
 
+import javax.jms.ConnectionFactory;
 import javax.sql.DataSource;
 
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.spring.ActiveMQConnectionFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -25,8 +28,11 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter;
 import org.springframework.remoting.rmi.RmiServiceExporter;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
@@ -96,17 +102,6 @@ public class RootConfig {
 	@Bean
 	public CacheManager cacheManager(RedisTemplate<String,Object> redisTemplate) {
 		return new RedisCacheManager(redisTemplate);
-	}
-	
-	//配置RMI服务
-	@Bean
-	public RmiServiceExporter rmiExporter(SpitterService spitterService) {
-		//默认绑定本机1199端口
-		RmiServiceExporter rmiServiceExporter = new RmiServiceExporter();
-		rmiServiceExporter.setService(spitterService);
-		rmiServiceExporter.setServiceName("SpitterService");
-		rmiServiceExporter.setServiceInterface(SpitterService.class);
-		return rmiServiceExporter;
 	}
 }
 
